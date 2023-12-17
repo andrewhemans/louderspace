@@ -1,0 +1,37 @@
+<div id="<%= dom_id venue %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= venue.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Address:</strong>
+    <%= venue.address %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">City:</strong>
+    <%= venue.city %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">State:</strong>
+    <%= venue.state %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Latitude:</strong>
+    <%= venue.latitude %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Longitude:</strong>
+    <%= venue.longitude %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this venue", venue, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this venue", edit_venue_path(venue), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

@@ -1,0 +1,36 @@
+<div id="<%= dom_id event %>" class="bg-white shadow-lg rounded-lg overflow-hidden my-5">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2"><%= event.name %></div>
+
+    <p class="text-gray-700 text-base">
+      <strong>Date:</strong> <%= event.date.strftime("%B %d, %Y") %>
+    </p>
+
+    <p class="text-gray-700 text-base mt-4">
+      <strong>Description:</strong> <%= event.description %>
+    </p>
+
+    <!-- Venue Information -->
+    <p class="text-gray-700 text-base mt-4">
+      <strong>Venue:</strong> <%= event.venue.name %><br>
+      <span class="text-sm text-gray-600"><%= event.venue.address %>, <%= event.venue.city %>, <%= event.venue.state %></span>
+    </p>
+
+    <!-- Genres -->
+    <div class="mt-4">
+      <strong class="text-gray-700 text-base">Genres:</strong>
+      <ul class="list-disc list-inside text-gray-700 text-base">
+        <% event.genres.each do |genre| %>
+          <li><%= genre.name %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <% if action_name != "show" %>
+    <div class="px-6 pt-4 pb-2">
+      <%= link_to "Show this event", event, class: "inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2" %>
+      <%= link_to "Edit this event", edit_event_path(event), class: "inline-block bg-green-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2" %>
+    </div>
+  <% end %>
+</div>
