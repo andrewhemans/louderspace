@@ -5,24 +5,31 @@ class EventsController < ApplicationController
   def index
     @events = Event.includes(:venue, :genres)
   
-    if params[:city].present? && params[:state].present?
-      location = "#{params[:city]}, #{params[:state]}"
-      city_coordinates = Geocoder.coordinates(location)
-      
-      if city_coordinates
-        distance = params[:distance].present? ? params[:distance].to_i : 10 # Default distance
-        # First, get nearby venues without ordering by distance
-        nearby_venues = Venue.near(city_coordinates, distance, order: false)
-        # Then pluck their IDs
-        nearby_venue_ids = nearby_venues.pluck(:id)
-        @events = @events.joins(:venue).where(venues: { id: nearby_venue_ids })
-      end
-    end
-  
-    if params[:genre_id].present?
-      @events = @events.joins(:genres).where(genres: { id: params[:genre_id] })
-    end
   end
+
+    # GET /events/search
+    def search
+      @events = Event.includes(:venue, :genres)
+  
+      if params[:city].present? && params[:state].present?
+        location = "#{params[:city]}, #{params[:state]}"
+        city_coordinates = Geocoder.coordinates(location)
+  
+        if city_coordinates
+          distance = params[:distance].present? ? params[:distance].to_i : 10 # Default distance
+          nearby_venues = Venue.near(city_coordinates, distance, order: false)
+          nearby_venue_ids = nearby_venues.pluck(:id)
+          @events = @events.joins(:venue).where(venues: { id: nearby_venue_ids })
+        end
+      end
+  
+      if params[:genre_id].present?
+        @events = @events.joins(:genres).where(genres: { id: params[:genre_id] })
+      end
+  
+      # Render the same view as the index action or a dedicated search results view
+      render :index
+    end
 
   # GET /events/1 or /events/1.json
   def show

@@ -8,8 +8,8 @@
     <%= link_to "New event", new_event_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
- <%= form_with(url: events_path, method: :get, local: true, class: "mb-4") do |form| %>
-  <div class="flex space-x-3">
+<%= form_with(url: search_events_path, method: :get, data: { controller: 'event-search', action: 'submit->event-search#search' }, class: "mb-4") do |form| %>  
+<div class="flex space-x-3">
     <%= form.text_field :city, placeholder: 'City', class: "rounded-lg border-gray-300" %>
     <%= form.text_field :state, placeholder: 'State', class: "rounded-lg border-gray-300" %>
 
@@ -21,7 +21,7 @@
   </div>
 <% end %>
 
-  <div id="events" class="min-w-full">
-    <%= render @events %>
-  </div>
+<div id="events" class="min-w-full">
+  <%= render partial: 'events/event_list', locals: { events: @events } %>
+</div>
 </div>
